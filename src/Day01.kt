@@ -1,17 +1,54 @@
+import java.util.*
+
+/**
+ * Day1
+ */
 fun main() {
+
     fun part1(input: List<String>): Int {
-        return input.size
+        var max = 0
+        var current = 0
+
+        val iter = input.iterator()
+        while (iter.hasNext()) {
+            val str = iter.next()
+            if (str.isBlank()) {
+                if (current > max) {
+                    max = current
+                }
+                current = 0
+            } else {
+                val calories = str.toInt(10)
+                current += calories
+            }
+        }
+        if (current > max) {
+            max = current
+        }
+        return max
     }
 
     fun part2(input: List<String>): Int {
-        return input.size
+        val set = TreeSet<Int> { a, b -> b - a }
+        var current = 0
+        val iter = input.iterator()
+        while (iter.hasNext()) {
+            val str = iter.next()
+            if (str.isBlank()) {
+                set.add(current)
+                current = 0
+            } else {
+                val calories = str.toInt(10)
+                current += calories
+            }
+        }
+        return set.take(3).sumOf { it }
     }
 
-    // test if implementation meets criteria from the description, like:
-    val testInput = readInput("Day01_test")
-    check(part1(testInput) == 1)
-
     val input = readInput("Day01")
-    println(part1(input))
-    println(part2(input))
+
+    println("Part 1: ${part1(input)}")
+    println("Part 2: ${part2(input)}")
 }
+
+
